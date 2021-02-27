@@ -16,7 +16,7 @@ def save():
         print("successsss")
         searchText= request.form["data"]
         
-        url="http://api.openweathermap.org/data/2.5/weather?q="+searchText+"&appid="
+        url="http://api.openweathermap.org/data/2.5/weather?q="+searchText+"&appid=e885b85ed11e3dddf35c2160d37709ef"
         result=requests.get(url)
         json =result.json()
         result=requests.get(url)
@@ -27,11 +27,12 @@ def save():
             weather=json['weather'][0]['main'],
             description=json['weather'][0]['description'],
             temp_mid ="↓"+str(round(json['main']['temp_min']-273.15))+"°"+ " ↑"+str(round(json['main']['temp_max']-273.15))+"°",
-           
-            temp= str(round(json['main']['temp']-273.15))+"°",
+            humidity= str(json['main']['humidity'])+'%',
+            temp= str(round(json['main']['temp']-273.15)),
             date = datetime.now().strftime('%x'),
-            wind =  'Wind '+str(json['wind']['speed'])+'km/h',
-            day =datetime.today().strftime('%A')
+            wind =  str(json['wind']['speed'])+'km/h',
+            day =datetime.today().strftime('%A'),
+            icon= json['weather'][0]['icon'],
         )
     else:
         return "get"
