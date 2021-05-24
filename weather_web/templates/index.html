@@ -32,12 +32,20 @@
                     url:"{{url_for('save')}}",
                     data: {'data': $("#search").val()},
                     success:function(result){
+						console.log(result)
                         var list= $("[header]");
                         $(list).each(function(index,element){
                             debugger;
                             var value=$(element).attr("header");
                             $("[header="+value+"]").text(result[value]);
                         });
+						$(".date").text(result.listWeather[0].dt_txt)
+						var listDiv = $(".forecast");
+						$(listDiv).each(function(index,element){
+							$(element).find(".day").text(result.listWeather[index].date)
+							$(element).find(".degree").text(result.listWeather[index].temp)+"o"
+							$(element).find("img").attr("src","/static/images/icons/"+result.listWeather[index].icon+".svg")
+						});
                      /*   $("[header=weather]").text(result.weather);
                         $("[header=description]").text(result.description);
                         $("[header=temp_min]").text(result.tempMin);*/
@@ -172,10 +180,10 @@
 								<small>18<sup>o</sup></small>
 							</div>
 						</div>
-						<div class="forecast">
+						<!-- <div class="forecast">
 							<div class="forecast-header">
 								<div class="day">Sunday</div>
-							</div> <!-- .forecast-header -->
+							</div> 
 							<div class="forecast-content">
 								<div class="forecast-icon">
 									<img src="/static/images/icons/icon-14.svg" alt="" width=48>
@@ -183,7 +191,7 @@
 								<div class="degree">23<sup>o</sup>C</div>
 								<small>18<sup>o</sup></small>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
