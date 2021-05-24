@@ -32,23 +32,21 @@
                     url:"{{url_for('save')}}",
                     data: {'data': $("#search").val()},
                     success:function(result){
-						console.log(result)
-                        var list= $("[header]");
-                        $(list).each(function(index,element){
-                            debugger;
-                            var value=$(element).attr("header");
-                            $("[header="+value+"]").text(result[value]);
-                        });
+
+						var todayInfo =$("div.today.forecast");
+						$("div.today.forecast").find(".location").text(result.cityName)
+						$("div.today.forecast").find(".num").text(result.listWeather[0].temp+"°C")
+						$("div.today.forecast").find("span[header='wind']").text(result.listWeather[0].wind)
+						$("div.today.forecast").find("span[header='humidity']").text(result.listWeather[0].humidity)
+					
 						$(".date").text(result.listWeather[0].dt_txt)
-						var listDiv = $(".forecast");
+						var listDiv = $(".forecast").not("div.today.forecast");
 						$(listDiv).each(function(index,element){
-							$(element).find(".day").text(result.listWeather[index].date)
-							$(element).find(".degree").text(result.listWeather[index].temp)+"o"
-							$(element).find("img").attr("src","/static/images/icons/"+result.listWeather[index].icon+".svg")
+							$(element).find(".day").text(result.listWeather[index+1].date)
+							$(element).find(".degree").text(result.listWeather[index+1].temp+"°C")
+							$(element).find("img").attr("src","/static/images/icons/"+result.listWeather[index+1].icon+".svg")
+							$(element).find("small").text(result.listWeather[index+1].temp_mid)							
 						});
-                     /*   $("[header=weather]").text(result.weather);
-                        $("[header=description]").text(result.description);
-                        $("[header=temp_min]").text(result.tempMin);*/
                         $("#image").attr("src","/static/images/icons/"+result["icon"]+".svg");
                     }
                 })
