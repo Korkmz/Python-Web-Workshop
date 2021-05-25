@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
 		
-		<title>Compass Starter by Ariona, Rian</title>
+		<title>Weather</title>
 
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
@@ -14,10 +14,7 @@
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="/static/style1.css">
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-		<!--[if lt IE 9]>
-		<script src="js/ie-support/html5.js"></script>
-		<script src="js/ie-support/respond.js"></script>
-		<![endif]-->
+		
 
 	</head>
 
@@ -28,18 +25,18 @@
 				Search(""); //İlk açıldığında da kişinin lokasuna ait hava durumu bilgisi döner
 			});
      
-            function searchFnc(event){
+                        function searchFnc(event){
 				event.preventDefault;
 				var searchTxt=$("#search").val();
 				Search(searchTxt);
-            }
+                        }
 
-			 function Search(searchValue){
+		        function Search(searchValue){
 				$.ajax({
-                    type : 'POST',
-                    url:"{{url_for('save')}}",
-                    data: {'data': searchValue},
-                    success:function(result){
+                                   type : 'POST',
+                                   url:"{{url_for('save')}}",
+                                   data: {'data': searchValue},
+                                   success:function(result){
 
 						var todayInfo =$("div.today.forecast");
 						$("div.today.forecast").find(".location").text(result.cityName)
@@ -56,9 +53,9 @@
 							$(element).find("img").attr("src","http://openweathermap.org/img/wn/"+result.listWeather[index+1].icon+"@2x.png")
 							$(element).find("small").text(result.listWeather[index+1].temp_mid)							
 						});
-                   //     $("#image").attr("src","/static/images/icons/"+result["icon"]+".svg");
-                    }
-                })
+                                //     $("#image").attr("src","/static/images/icons/"+result["icon"]+".svg");
+                               }
+                        })
          
 			 }
         </script>
