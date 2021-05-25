@@ -1,20 +1,34 @@
 from flask import Flask,render_template,request ,jsonify
 from datetime import datetime
 import requests
-
+from geopy.geocoders import Nominatim
+import geocoder
 app=Flask(__name__)
 
 @app.route("/")
 def home():
       return render_template("index.html")
    
-      
+def locationFucn():     
+    geolocator = Nominatim(user_agent="geoapiExercises")
+    myloc = geocoder.ip('me')
+
+    Latitude = str(myloc.latlng[0])
+    Longitude = str(myloc.latlng[1])
+    location = geolocator.reverse(Latitude+","+Longitude)
+    return location.raw['address']['city']
 
 @app.route("/save/",methods=["POST"])
 def save():
     if request.method=="POST":
         print("successsss")
+        
         searchText= request.form["data"]
+        statu= request.form["statu"]
+
+        print(statu)
+        if(statu==0):
+            searchText=locationFucn()
         
        # url="http://api.openweathermap.org/data/2.5/weather?q="+searchText+"&appid=e885b85ed11e3dddf35c2160d37709ef"
         url="http://api.openweathermap.org/data/2.5/forecast?q="+searchText+"&id=524901&appid=e885b85ed11e3dddf35c2160d37709ef"
@@ -27,10 +41,10 @@ def save():
         for item in json['list']:
             x=0
             for item2 in listWeather:
-                print(item2['date'],item['dt_txt'].split(" ")[0] ==item2["dt_txt"].split(" ")[0])
+              #  print(item2['date'],item['dt_txt'].split(" ")[0] ==item2["dt_txt"].split(" ")[0])
                 if item['dt_txt'].split(" ")[0] ==item2["dt_txt"].split(" ")[0]:
                    x=1
-            print
+           # print
             if x != 1 :
                 listWeather.append({
                          'date': (datetime.fromtimestamp(item['dt'])).strftime("%A") ,
