@@ -9,7 +9,7 @@ app=Flask(__name__)
 def home():
       return render_template("index.html")
    
-def locationFucn():     
+def locationFindFucn():     #Kişinin lokasyonun bulmaktadır(Şehir geri döner)
     geolocator = Nominatim(user_agent="geoapiExercises")
     myloc = geocoder.ip('me')
 
@@ -20,31 +20,24 @@ def locationFucn():
 
 @app.route("/save/",methods=["POST"])
 def save():
-    if request.method=="POST":
-        print("successsss")
-        
+    if request.method=="POST":        
         searchText= request.form["data"]
-        statu= request.form["statu"]
 
-        print(statu)
-        if(statu==0):
-            searchText=locationFucn()
+        if(searchText==""): #Hiçbir şey aratma yapmaz ise kişinin lokasyonuna ait hava durum bilgisi döner
+            searchText=locationFindFucn()
         
-       # url="http://api.openweathermap.org/data/2.5/weather?q="+searchText+"&appid=e885b85ed11e3dddf35c2160d37709ef"
         url="http://api.openweathermap.org/data/2.5/forecast?q="+searchText+"&id=524901&appid=e885b85ed11e3dddf35c2160d37709ef"
         result=requests.get(url)
         json =result.json()
         result=requests.get(url)
-        #print(json['list'])
 
         listWeather =[]
         for item in json['list']:
             x=0
             for item2 in listWeather:
-              #  print(item2['date'],item['dt_txt'].split(" ")[0] ==item2["dt_txt"].split(" ")[0])
                 if item['dt_txt'].split(" ")[0] ==item2["dt_txt"].split(" ")[0]:
                    x=1
-           # print
+
             if x != 1 :
                 listWeather.append({
                          'date': (datetime.fromtimestamp(item['dt'])).strftime("%A") ,
@@ -61,9 +54,6 @@ def save():
             
                    
                     
-            #print("1",listWeather.filter(p=>p.date == item['dt_txt']))
-
-        print(listWeather)
         return jsonify(
             cityName= json['city']['name'],
             listWeather= listWeather

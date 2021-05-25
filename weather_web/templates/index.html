@@ -25,19 +25,20 @@
 	<body>
         <script>
 			$(window).load(function(){
-				Search("İstanbul",0);
+				Search(""); //İlk açıldığında da kişinin lokasuna ait hava durumu bilgisi döner
 			});
      
             function searchFnc(event){
 				event.preventDefault;
-				Search($("#search").val(),1);
+				var searchTxt=$("#search").val();
+				Search(searchTxt);
             }
 
-			 function Search(searchValue,statuValue){
+			 function Search(searchValue){
 				$.ajax({
                     type : 'POST',
                     url:"{{url_for('save')}}",
-                    data: {'data': searchValue,'statu':statuValue},
+                    data: {'data': searchValue},
                     success:function(result){
 
 						var todayInfo =$("div.today.forecast");
