@@ -23,11 +23,7 @@ def save():
     if request.method=="POST":        
         searchText= request.form["data"]
 
-<<<<<<< HEAD
         if(searchText==""): #Hiçbir şey aratma yapmaz ise kişinin lokasyonuna ait hava durum bilgisi döner
-=======
-        if(statu==0):      #Eger Statusu 0 ise kişinin lokasyonuna ait hava durumu döner.
->>>>>>> 05f2cf114b4b6add98969e1114d71095890848b4
             searchText=locationFindFucn()
         
         url="http://api.openweathermap.org/data/2.5/forecast?q="+searchText+"&id=524901&appid=e885b85ed11e3dddf35c2160d37709ef"
