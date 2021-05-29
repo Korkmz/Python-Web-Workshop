@@ -2438,3 +2438,35 @@ form input[type="reset"] {
 .social-links a {
   margin-right: 9px;
 }
+
+
+
+.find-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+  padding: 0 40px;
+  border: none;
+  background: #009ad8;
+  padding: 10px 40px;
+  border-radius: 30px;
+  color: white;
+  -webkit-appearance: button;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.spinner-icon {
+
+  width: 115px;
+  position: absolute;
+  /* bottom: -114px; */
+  left: 45%;
+  top: 38%;
+  z-index: 1;
+}
+
+.d-none {
+  display: none;
+}

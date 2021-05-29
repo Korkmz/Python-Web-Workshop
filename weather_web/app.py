@@ -40,7 +40,7 @@ def save():
 
             if x != 1 :
                 listWeather.append({
-                         'date': (datetime.fromtimestamp(item['dt'])).strftime("%A") ,
+                         'date': (datetime.fromtimestamp(item['dt'])).strftime("%m/%d/%Y") ,
                          'weather':item['weather'][0]['main'],
                          'description':item['weather'][0]['description'],
                          'temp_mid':"↓"+str(round(item['main']['temp_min']-273.15))+"°"+ " ↑"+str(round(item['main']['temp_max']-273.15))+"°",
@@ -52,7 +52,6 @@ def save():
                 })
 
             
-                   
                     
         return jsonify(
             cityName= json['city']['name'],
